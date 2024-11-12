@@ -1,0 +1,41 @@
+<!-- templates/home.html -->
+{% extends 'menu/base.html' %}
+
+{% load static %}
+
+{% block title %}Home - Restaurant Menu{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-cover bg-center h-80 flex items-center justify-center text-white" style="background-image: url('{% static 'images/hero.jfif' %}');">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">Our Tasty Food</h1>
+        <p class="text-lg">Discover the best dishes made with fresh ingredients and love.</p>
+    </div>
+</section>
+
+<!-- Latest Foods & Specials Section -->
+<section class="mt-8 p-4">
+    {% for category in categories %}
+        <h2 class="text-2xl font-bold mb-4">{{ category.name }}</h2>
+        <div class="overflow-x-auto whitespace-nowrap flex space-x-4 py-4">
+            {% for food in category.foods.all %}
+                <div class="w-64 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="{{ food.image.url }}" alt="{{ food.title }}" class="w-full h-40 object-cover">
+                    <div class="p-4 text-center">
+                        <h3 class="text-xl font-semibold">{{ food.title }}</h3>
+                        <p class="text-gray-600 mt-2">{{ food.price }} ETB</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-gray-500">No foods available under this category.</p>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p class="text-gray-500">No categories available.</p>
+    {% endfor %}
+</section>
+
+
+
+{% endblock %}
